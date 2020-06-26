@@ -11,6 +11,10 @@ Ejercicios del bootcamp backend GeeksHub con bases de datos
 
     ``` npm i mongoose ```
 
+- Para la encriptación de las contraseñas usamos bcryptjs:
+
+    ``` npm i bcryptjs ```
+
 Nota: Para desarrollo conviente instalar nodemon
 
 ``` npm i nodemon --save-dev ```
