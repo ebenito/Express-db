@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const UserSchema = new mongoose.Schema({
     name: String,
@@ -17,7 +18,8 @@ const UserSchema = new mongoose.Schema({
         type:String,
         default:'user',
         enum:['admin','user','guest']
-    }
+    },
+    token:Object
 },{
     toJSON:{
         transform:function (doc,ret) {  //sobrescribe el método toJSON para eliminar la password de los resultados, para mantener la confidencialidad
@@ -63,11 +65,27 @@ UserSchema.pre('save', async function(next){  //Middelwares: pre = acciones prev
         // pass = hash;
 
         user.password = await bcrypt.hash(user.password, 9); //Lo anterior se condensa en esta linea
+        user.token = await user.generateAuthToken();
         next();
     } catch (error) {
         console.error(error);
     };    
 });
+
+// Crearemos un método para la creación de un token a un usuario en concreto, ya que este
+// método se tiene que llamar directamente desde un documento que hayamos recogido
+// previamente.
+UserSchema.methods.generateAuthToken = function () {
+    const user = this
+    const access = "auth"
+    const token = jwt.sign({ _id: user._id }, "secretJsonwebtokens")
+    // return this.update({
+    //     $push: {
+    //         tokens: token,
+    // },
+    //})
+    return token
+}
 
 const User = mongoose.model('User', UserSchema);
 

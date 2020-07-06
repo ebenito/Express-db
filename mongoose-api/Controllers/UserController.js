@@ -38,10 +38,12 @@ const UserController = {
     async register(req, res) {
         try {
             const user = await User.create(req.body)
+            //const token = await user.generateAuthToken();
+            //console.log(token);
             res.send({user, message:'Usuario creado con éxito'})
         } catch (error) {
-         console.error(error)   ;
-         res.status(500).send({message:'Hubo un problema tratando de registrar al usuario', error})
+            console.error(error)   ;
+            res.status(500).send({message:'Hubo un problema tratando de registrar al usuario', error})
         }
     },
     async update(req,res) {

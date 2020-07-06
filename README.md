@@ -15,6 +15,10 @@ Ejercicios del bootcamp backend GeeksHub con bases de datos
 
     ``` npm i bcryptjs ```
 
+- Middleware para la validación de JWTs (JSON Web Tokens)
+
+    ``` npm i express-jwt ```
+
 Nota: Para desarrollo conviente instalar nodemon
 
 ``` npm i nodemon --save-dev ```
